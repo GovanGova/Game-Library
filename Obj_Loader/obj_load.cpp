@@ -252,50 +252,94 @@ void Gova::ObjLoad::LoadObjForDrawElements(char *filename)
 			}
 			else if(strcmp(first.data(),"f")==0)
 			{
+				tempNorm.size()!= normal.size()?normal.resize(vertex.size()):0;
+				temptexc.size()!=texcord.size()?texcord.resize(vertex.size()*2/3):0;
 				if((bNormal!=false)&&(bTexcordinate!=false))
 				{
 					//1st per vertex attribute for triangle
 					ob>>iv>>slash>>iu>>slash>>in;
 					index.push_back(iv-1);
 					
+					normal[((iv)*3)-3]=tempNorm[((in)*3)-3];
+					normal[((iv)*3)-2]=tempNorm[((in)*3)-2];
+					normal[((iv)*3)-1]=tempNorm[((in)*3)-1];
+					
+					texcord[((iv)*2)-2]=temptexc[(iu*2)-2];
+					texcord[((iv)*2)-1]=temptexc[(iu*2)-1];
+
+
 					//2nd per vertex attribute for triangle
 					ob>>iv>>slash>>iu>>slash>>in;
 					index.push_back(iv-1);
+					normal[((iv)*3)-3]=tempNorm[((in)*3)-3];
+					normal[((iv)*3)-2]=tempNorm[((in)*3)-2];
+					normal[((iv)*3)-1]=tempNorm[((in)*3)-1];
 					
+					texcord[((iv)*2)-2]=temptexc[(iu*2)-2];
+					texcord[((iv)*2)-1]=temptexc[(iu*2)-1];
 
 					//3rd per vertex attribute for triangle
 					ob>>iv>>slash>>iu>>slash>>in;
 					index.push_back(iv-1);
+					normal[((iv)*3)-3]=tempNorm[((in)*3)-3];
+					normal[((iv)*3)-2]=tempNorm[((in)*3)-2];
+					normal[((iv)*3)-1]=tempNorm[((in)*3)-1];
+					
+					texcord[((iv)*2)-2]=temptexc[(iu*2)-2];
+					texcord[((iv)*2)-1]=temptexc[(iu*2)-1];
+					
 				}
 				else if(bNormal!=false)
 				{	//1st per vertex attribute for triangle
 					//1st per vertex attribute for triangle
+
 					ob>>iv>>slash>>slash>>in;
+					if(iv==482)
+					{
+						printf("");
+					}
 					index.push_back(iv-1);
-					
+					normal[((iv)*3)-3]=tempNorm[((in)*3)-3];
+					normal[((iv)*3)-2]=tempNorm[((in)*3)-2];
+					normal[((iv)*3)-1]=tempNorm[((in)*3)-1];
+					//normal
+
 					//2nd per vertex attribute for triangle
 					ob>>iv>>slash>>slash>>in;
 					index.push_back(iv-1);
-					
+					normal[((iv)*3)-3]=tempNorm[((in)*3)-3];
+					normal[((iv)*3)-2]=tempNorm[((in)*3)-2];
+					normal[((iv)*3)-1]=tempNorm[((in)*3)-1];
 
 					//3rd per vertex attribute for triangle
 					ob>>iv>>slash>>slash>>in;
 					index.push_back(iv-1);
+					normal[((iv)*3)-3]=tempNorm[((in)*3)-3];
+					normal[((iv)*3)-2]=tempNorm[((in)*3)-2];
+					normal[((iv)*3)-1]=tempNorm[((in)*3)-1];
 				}
 				else if(bTexcordinate!=false)
 				{
 					//1st per vertex attribute for triangle
 					ob>>iv>>slash>>iu;
 					index.push_back(iv-1);
+					texcord[((iv)*2)-2]=temptexc[(iu*2)-2];
+					texcord[((iv)*2)-1]=temptexc[(iu*2)-1];
 					
+
 					//2nd per vertex attribute for triangle
 					ob>>iv>>slash>>iu;
 					index.push_back(iv-1);
+					texcord[((iv)*2)-2]=temptexc[(iu*2)-2];
+					texcord[((iv)*2)-1]=temptexc[(iu*2)-1];
 					
 
 					//3rd per vertex attribute for triangle
 					ob>>iv>>slash>>iu;
 					index.push_back(iv-1);
+					texcord[((iv)*2)-2]=temptexc[(iu*2)-2];
+					texcord[((iv)*2)-1]=temptexc[(iu*2)-1];
+					
 				
 				}
 				else if((bNormal==false)&&(bTexcordinate==false))
@@ -383,9 +427,8 @@ void Gova::ObjLoad::draw()
 	if(bIndex==true)
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,iBuf);
-		int a=index.size();
 		glDrawElements(GL_TRIANGLES,index.size(),GL_UNSIGNED_INT,NULL);
-		//glDrawElementsBaseVertex(GL_TRIANGLES,index.size(),GL_UNSIGNED_INT,NULL,0);
+		
 	}
 	else
 	{
